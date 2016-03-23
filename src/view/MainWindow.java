@@ -1,10 +1,9 @@
 package view;
 
-import model.IDrawable;
-import model.ImageHandler;
+import model.Ball;
+import model.Racket;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
@@ -25,9 +24,9 @@ public class MainWindow extends JFrame implements ComponentListener {
         this.title = title;
     }
 
-    public void init(List<IDrawable> drawables){
+    public void init(Racket[] rackets, List<Ball> balls){
         initWindow();
-        surface = initSurface(drawables);
+        surface = initSurface(rackets, balls);
         add(surface);
         System.out.println("View initialized!");
     }
@@ -50,15 +49,9 @@ public class MainWindow extends JFrame implements ComponentListener {
         setVisible(true);
     }
 
-    private MainSurface initSurface(List<IDrawable> drawables){
-        return new MainSurface(drawables, createForeground(), createBackground());
+    private MainSurface initSurface(Racket[] rackets, List<Ball> balls){
+        return new MainSurface(rackets, balls);
     }
-
-    private BufferedImage createBackground(){
-        return ImageHandler.loadImage("Background");
-    }
-
-    private BufferedImage createForeground(){return ImageHandler.loadImage("World");}
 
     @Override
     public void componentResized(ComponentEvent e) {

@@ -41,7 +41,7 @@ public class MainController implements ActionListener {
         playerController.update();
         world.update();
         frame.repaint();
-        System.out.println("Fps: " + (1/getDeltaTime()));
+        //System.out.println("Fps: " + (1/getDeltaTime()));
         setDeltaTime();
     }
 
@@ -50,12 +50,12 @@ public class MainController implements ActionListener {
     }
 
     private PlayerController initPlayerControls(World world){
-        return new PlayerController(world.getPlayer());
+        return new PlayerController(world.getRackets()[0]);
     }
 
     private void initView(){
-        frame = new MainWindow("Hungry Gulls");
-        frame.init(world.getDrawables());
+        frame = new MainWindow("Cool Pong");
+        frame.init(world.getRackets(), world.getBalls());
         frame.registerKeyListener(playerController);
     }
 

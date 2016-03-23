@@ -50,7 +50,7 @@ public class MainController implements ActionListener {
     }
 
     private PlayerController initPlayerControls(World world){
-        return new PlayerController(world.getRackets()[0]);
+        return new PlayerController(world);
     }
 
     private void initView(){

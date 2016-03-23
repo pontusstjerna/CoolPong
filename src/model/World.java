@@ -1,5 +1,9 @@
 package model;
 
+import model.balls.Ball;
+import model.rackets.Racket;
+import model.rackets.StandardRacket;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +12,7 @@ import java.util.List;
  */
 public class World{
     public static final int WORLD_WIDTH = 500;
-    public static final int WORLD_HEIGHT = 200;
+    public static final int WORLD_HEIGHT = 300;
 
     private Racket[] rackets;
     private List<Ball> balls;
@@ -40,7 +44,10 @@ public class World{
     }
 
     private void createRackets(){
-        rackets = new Racket[2];
+        rackets = new Racket[] {
+                new StandardRacket(50, WORLD_HEIGHT/2, 1, 50),
+                new StandardRacket(450, WORLD_HEIGHT/2, 1, 50)
+        };
     }
 
     private void createBalls(){

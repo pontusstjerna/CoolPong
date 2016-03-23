@@ -1,6 +1,7 @@
 package controller;
 
-import model.Racket;
+import model.World;
+import model.rackets.Racket;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,10 +13,12 @@ import java.util.Set;
  */
 public class PlayerController implements KeyListener {
     Racket player;
+    World world;
     Set<Integer> movements = new HashSet<>();
 
-    public PlayerController(Racket player){
-        this.player = player;
+    public PlayerController(World world){
+        player = world.getRackets()[0];
+        this.world = world;
         System.out.println("PlayerController initialized!");
     }
 
@@ -51,7 +54,7 @@ public class PlayerController implements KeyListener {
                     player.moveDown();
                     break;
                 case KeyEvent.VK_SPACE:
-                    player.addBall();
+                    world.addBall();
                     break;
             }
         }

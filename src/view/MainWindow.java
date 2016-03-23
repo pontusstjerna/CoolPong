@@ -1,13 +1,13 @@
 package view;
 
-import model.Ball;
-import model.Racket;
+import model.balls.Ball;
+import model.rackets.Racket;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -26,9 +26,9 @@ public class MainWindow extends JFrame implements ComponentListener {
 
     public void init(Racket[] rackets, List<Ball> balls){
         initWindow();
-        surface = initSurface(rackets, balls);
+        surface = new MainSurface(rackets, balls);
         add(surface);
-        System.out.println("View initialized!");
+        System.out.println("View initialized with width " + WINDOW_WIDTH + " and height " + WINDOW_HEIGHT + ". ");
     }
 
     @Override
@@ -47,10 +47,6 @@ public class MainWindow extends JFrame implements ComponentListener {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
-    private MainSurface initSurface(Racket[] rackets, List<Ball> balls){
-        return new MainSurface(rackets, balls);
     }
 
     @Override

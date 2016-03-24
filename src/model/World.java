@@ -1,11 +1,13 @@
 package model;
 
 import model.balls.Ball;
+import model.balls.StandardBall;
 import model.rackets.Racket;
 import model.rackets.StandardRacket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Pontus on 2016-03-04.
@@ -17,16 +19,22 @@ public class World{
     private Racket[] rackets;
     private List<Ball> balls;
 
+    private Random rand;
+
     public World(){
+        rand = new Random();
         createWorld();
     }
 
-    public void update() {
-
+    public void update(double deltaTime) {
+        updateBalls(deltaTime);
     }
 
     public void addBall(){
-        System.out.println("Added ball. " + balls.size() + " balls.");
+        int x = rand.nextInt(WORLD_WIDTH);
+        int y = rand.nextInt(WORLD_HEIGHT);
+        balls.add(new StandardBall(x, y));
+        System.out.println("Added ball at (" + x + "," + y + "). " + balls.size() + " ball(s).");
     }
 
     public Racket[] getRackets(){
@@ -52,6 +60,12 @@ public class World{
 
     private void createBalls(){
         balls = new ArrayList<>();
+    }
+
+    private void updateBalls(double deltaTime){
+        for(Ball b : balls){
+            b.update(deltaTime);
+        }
     }
 
     @Override

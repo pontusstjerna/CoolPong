@@ -2,7 +2,6 @@ package controller;
 
 import model.World;
 import model.rackets.Racket;
-import view.MainSurface;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -17,7 +16,7 @@ public class PlayerController implements KeyListener {
     World world;
     Set<Integer> movements = new HashSet<>();
 
-    public PlayerController(World world, MainSurface surface){
+    public PlayerController(World world){
         player = world.getRackets()[0];
         this.world = world;
         System.out.println("PlayerController initialized!");
@@ -36,6 +35,12 @@ public class PlayerController implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         movements.remove(e.getKeyCode());
+
+        switch(e.getKeyCode()){
+            case KeyEvent.VK_SPACE:
+                world.addBall();
+                break;
+        }
     }
 
     public void update(){
@@ -53,11 +58,6 @@ public class PlayerController implements KeyListener {
                     break;
                 case KeyEvent.VK_DOWN:
                     player.moveDown();
-                    break;
-                case KeyEvent.VK_SPACE:
-                    world.addBall();
-                    break;
-                case KeyEvent.VK_V:
                     break;
             }
         }

@@ -99,6 +99,13 @@ public class Vector2D
         return new Vector2D(a.getX() + b.getX(), a.getY() + b.getY());
     }
 
+    public Vector2D multiply(double k){
+        x *= k;
+        y *= k;
+
+        return this;
+    }
+
     public Vector2D normalize(){
         /*
         u = v/|v|
@@ -108,6 +115,19 @@ public class Vector2D
 
         return this;
     }
+
+    public Vector2D negateX(){
+        x = -x;
+
+        return this;
+    }
+
+    public Vector2D negateY(){
+        y = -y;
+
+        return this;
+    }
+
 
     @Override
     public String toString(){

@@ -41,6 +41,10 @@ public class MainWindow extends JFrame implements ComponentListener {
         surface.addComponentListener(this);
     }
 
+    public MainSurface getSurface(){
+        return surface;
+    }
+
     private void initWindow(){
         setTitle(title);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);

@@ -39,7 +39,7 @@ public class MainController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e){
         playerController.update();
-        world.update();
+        world.update(getDeltaTime());
         frame.repaint();
         //System.out.println("Fps: " + (1/getDeltaTime()));
         setDeltaTime();

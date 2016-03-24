@@ -6,8 +6,8 @@ import util.Vector2D;
  * Created by Pontus on 2016-03-04.
  */
 public interface Racket {
-    int getX();
-    int getY();
+    double getX();
+    double getY();
     int getRotation();
     int getLength();
     int getWidth();

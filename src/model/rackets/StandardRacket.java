@@ -21,13 +21,13 @@ public class StandardRacket implements Racket {
     }
 
     @Override
-    public int getX() {
-        return (int)x;
+    public double getX() {
+        return x;
     }
 
     @Override
-    public int getY() {
-        return (int)y;
+    public double getY() {
+        return y;
     }
 
     @Override

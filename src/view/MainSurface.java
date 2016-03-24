@@ -32,11 +32,12 @@ public class MainSurface extends JPanel {
         super.paintComponent(g);
 
         paintWorld(g2d);
+        paintBalls(g2d);
         paintRackets(g2d);
     }
 
-    public void showVectors(boolean show){
-        showVectors = show;
+    public void switchShowVectors(){
+        showVectors = !showVectors;
     }
 
     private void paintWorld(Graphics2D g){
@@ -61,24 +62,14 @@ public class MainSurface extends JPanel {
     }
 
     private void paintRackets(Graphics2D g){
-        int scaleX = (MainWindow.WINDOW_WIDTH - (int)(World.WORLD_WIDTH*scale()))/2;
-        int scaleY = (MainWindow.WINDOW_HEIGHT - (int)(World.WORLD_HEIGHT*scale()))/2;
-
-        if(scaleX < 0){
-            scaleX = 0;
-        }
-
-        if(scaleY < 0){
-            scaleY = 0;
-        }
 
         for(Racket r : rackets){
             g.setColor(new Color(100,200,100));
 
-            int x = (int)((r.getX() - r.getWidth()/2)*scale()) + scaleX;
-            int y = (int)((r.getY() - r.getLength()/2)*scale()) + scaleY;
-            int middleX = (int)(r.getX()*scale()) + scaleX;
-            int middleY = (int)(r.getY()*scale()) + scaleY;
+            int x = (int)((r.getX() - r.getWidth()/2)*scale()) + scaleX();
+            int y = (int)((r.getY() - r.getLength()/2)*scale()) + scaleY();
+            int middleX = (int)(r.getX()*scale()) + scaleX();
+            int middleY = (int)(r.getY()*scale()) + scaleY();
 
             g.rotate(Math.toRadians(r.getRotation()), middleX, middleY);
             g.fillRect(x, y, (int)(r.getWidth()*scale()),
@@ -91,6 +82,22 @@ public class MainSurface extends JPanel {
         }
     }
 
+    private void paintBalls(Graphics2D g){
+        for(Ball b : balls){
+            g.setColor(Color.BLUE);
+
+            int x = (int)(b.getX()*scale()) + scaleX();
+            int y = (int)(b.getY()*scale()) + scaleY();
+
+            g.fillRoundRect(x, y,
+                    (int)(scale()*b.getRadius()*2), (int)(scale()*b.getRadius()*2),
+                    (int)(scale()*b.getRadius()*2), (int)(scale()*b.getRadius())*2);
+
+            g.setColor(Color.red);
+            paintVector(b.getDirection(), (int)(x + (b.getRadius()*scale())), (int)(y + (b.getRadius()*scale())), g);
+        }
+    }
+
     private void paintVector(Vector2D vector, int startX, int startY, Graphics2D g){
         if(showVectors){
             g.drawLine(startX, startY, (int)(vector.getX()*scale()) + startX, (int)(vector.getY()*scale()) + startY);
@@ -100,5 +107,25 @@ public class MainSurface extends JPanel {
     private double scale(){
         return Math.min((double)MainWindow.WINDOW_WIDTH/World.WORLD_WIDTH,
                 (double)MainWindow.WINDOW_HEIGHT/World.WORLD_HEIGHT);
+    }
+
+    private int scaleX(){
+        int scaleX = (MainWindow.WINDOW_WIDTH - (int)(World.WORLD_WIDTH*scale()))/2;
+
+        if(scaleX < 0){
+            scaleX = 0;
+        }
+
+        return scaleX;
+    }
+
+    private int scaleY(){
+        int scaleY = (MainWindow.WINDOW_HEIGHT - (int)(World.WORLD_HEIGHT*scale()))/2;
+
+        if(scaleY < 0){
+            scaleY = 0;
+        }
+
+        return scaleY;
     }
 }

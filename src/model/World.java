@@ -26,7 +26,7 @@ public class World{
     }
 
     public void addBall(){
-
+        System.out.println("Added ball. " + balls.size() + " balls.");
     }
 
     public Racket[] getRackets(){

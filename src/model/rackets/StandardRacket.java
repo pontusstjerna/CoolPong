@@ -1,6 +1,7 @@
 package model.rackets;
 
 import model.World;
+import util.Vector2D;
 
 /**
  * Created by pontu on 2016-03-23.
@@ -10,6 +11,7 @@ public class StandardRacket implements Racket {
     private int rotation;
     private double speed;
     private int length;
+    private int width = 10;
 
     public StandardRacket(int x, int y, int speed, int length){
         this.x = x;
@@ -36,6 +38,14 @@ public class StandardRacket implements Racket {
     @Override
     public int getLength(){
         return length;
+    }
+
+    @Override
+    public int getWidth(){ return width; }
+
+    @Override
+    public Vector2D getNormal(){
+        return new Vector2D(Math.cos(Math.toRadians(rotation))*50, Math.sin(Math.toRadians(rotation))*50);
     }
 
     @Override

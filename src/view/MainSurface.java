@@ -3,6 +3,7 @@ package view;
 import model.World;
 import model.balls.Ball;
 import model.rackets.Racket;
+import util.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +14,9 @@ import java.util.List;
  */
 public class MainSurface extends JPanel {
 
-    Racket[] rackets;
-    List<Ball> balls;
+    private Racket[] rackets;
+    private List<Ball> balls;
+    private boolean showVectors = true;
 
     public MainSurface(Racket[] rackets, List<Ball> balls){
         setFocusable(true);
@@ -31,6 +33,10 @@ public class MainSurface extends JPanel {
 
         paintWorld(g2d);
         paintRackets(g2d);
+    }
+
+    public void showVectors(boolean show){
+        showVectors = show;
     }
 
     private void paintWorld(Graphics2D g){
@@ -55,8 +61,6 @@ public class MainSurface extends JPanel {
     }
 
     private void paintRackets(Graphics2D g){
-        g.setColor(new Color(100,200,100));
-
         int scaleX = (MainWindow.WINDOW_WIDTH - (int)(World.WORLD_WIDTH*scale()))/2;
         int scaleY = (MainWindow.WINDOW_HEIGHT - (int)(World.WORLD_HEIGHT*scale()))/2;
 
@@ -69,15 +73,27 @@ public class MainSurface extends JPanel {
         }
 
         for(Racket r : rackets){
-            int x = (int)(r.getX()*scale()) + scaleX;
+            g.setColor(new Color(100,200,100));
+
+            int x = (int)((r.getX() - r.getWidth()/2)*scale()) + scaleX;
             int y = (int)((r.getY() - r.getLength()/2)*scale()) + scaleY;
+            int middleX = (int)(r.getX()*scale()) + scaleX;
             int middleY = (int)(r.getY()*scale()) + scaleY;
 
-            g.rotate(Math.toRadians(r.getRotation()), x, middleY);
-            g.fillRect(x, y, (int)(10*scale()),
+            g.rotate(Math.toRadians(r.getRotation()), middleX, middleY);
+            g.fillRect(x, y, (int)(r.getWidth()*scale()),
                     (int)(r.getLength()*scale()));
 
-            g.rotate(Math.toRadians(-r.getRotation()), x, middleY);
+            g.rotate(Math.toRadians(-r.getRotation()), middleX, middleY);
+
+            g.setColor(Color.red);
+            paintVector(r.getNormal(), middleX, middleY, g);
+        }
+    }
+
+    private void paintVector(Vector2D vector, int startX, int startY, Graphics2D g){
+        if(showVectors){
+            g.drawLine(startX, startY, (int)(vector.getX()*scale()) + startX, (int)(vector.getY()*scale()) + startY);
         }
     }
 

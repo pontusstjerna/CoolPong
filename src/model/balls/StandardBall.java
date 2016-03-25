@@ -12,8 +12,10 @@ public class StandardBall implements Ball {
     private double x,y;
     private Vector2D direction;
     private Random rand;
-    private double speed = 5;
+    private double speed = 100;
     private double radius = 5;
+
+    private static int nBounces = 0;
 
     public StandardBall(double x, double y){
         this.x = x;
@@ -35,6 +37,13 @@ public class StandardBall implements Ball {
 
         x = x + direction.getX()*deltaTime;
         y = y + direction.getY()*deltaTime;
+    }
+
+    @Override
+    public void bounce(Vector2D normal){
+        direction = Vector2D.add(direction, (normal.normalize().multiply(speed*2))).normalize().multiply(speed);
+        nBounces++;
+        System.out.println("Supposed speed: " + speed + " actual speed: " + direction.length() + ", nBounces: " + nBounces);
     }
 
     @Override

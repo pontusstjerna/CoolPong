@@ -99,6 +99,13 @@ public class Vector2D
         return new Vector2D(a.getX() + b.getX(), a.getY() + b.getY());
     }
 
+    public Vector2D add(Vector2D term){
+        x += term.getX();
+        y += term.getY();
+
+        return this;
+    }
+
     public Vector2D multiply(double k){
         x *= k;
         y *= k;

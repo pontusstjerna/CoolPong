@@ -11,4 +11,5 @@ public interface Ball {
     double getRadius();
     Vector2D getDirection();
     void update(double deltaTime);
+    void bounce(Vector2D normal);
 }

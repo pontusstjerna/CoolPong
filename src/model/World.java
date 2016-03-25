@@ -27,7 +27,11 @@ public class World{
     }
 
     public void update(double deltaTime) {
+        controlRacket(1);
+        controlRacket(0);
+
         updateBalls(deltaTime);
+        checkCollisions();
     }
 
     public void addBall(){
@@ -65,6 +69,41 @@ public class World{
     private void updateBalls(double deltaTime){
         for(Ball b : balls){
             b.update(deltaTime);
+        }
+    }
+
+    private void checkCollisions(){
+        List<Ball> removeBalls = new ArrayList<>();
+
+        for(Racket r : rackets){
+            for(Ball b : balls){
+                if((b.getX() < r.getX() + r.getWidth()/2 &&
+                        b.getX() > r.getX() - r.getWidth()/2) &&
+                        (b.getY() < r.getY() + r.getLength()/2 &&
+                        b.getY() > r.getY() - r.getLength()/2)){
+                    b.bounce(r.getNormal());
+                }
+                if(b.getX() < 0 || b.getX() > WORLD_WIDTH){
+                    removeBalls.add(b);
+                }
+            }
+        }
+
+        for(Ball b : removeBalls){
+            balls.remove(b);
+        }
+    }
+
+    private void controlRacket(int i){
+        if(rackets[1].getRotation() < 180){
+            rackets[1].rotateRight();
+        }
+        if(balls.size() == 1){
+            if(balls.get(0).getY() > rackets[i].getY()){
+                rackets[i].moveDown();
+            }else{
+                rackets[i].moveUp();
+            }
         }
     }
 

@@ -28,17 +28,29 @@ public class World{
 
     public void update(double deltaTime) {
         controlRacket(1);
-        controlRacket(0);
+        //controlRacket(0);
 
         updateBalls(deltaTime);
-        checkCollisions();
     }
 
     public void addBall(){
-        int x = rand.nextInt(WORLD_WIDTH);
-        int y = rand.nextInt(WORLD_HEIGHT);
+        int x = WORLD_WIDTH/2;
+        int y = WORLD_HEIGHT/2;
         balls.add(new StandardBall(x, y));
         System.out.println("Added ball at (" + x + "," + y + "). " + balls.size() + " ball(s).");
+    }
+
+    public void addBalls(){
+
+        for(int i = 0; i < 20000; i++){
+            int x = rand.nextInt(WORLD_WIDTH);
+            int y = rand.nextInt(WORLD_HEIGHT);
+            balls.add(new StandardBall(x, y));
+
+            if(i % 100000 == 0){
+                System.out.println(i/100000);
+            }
+        }
     }
 
     public Racket[] getRackets(){
@@ -64,17 +76,33 @@ public class World{
 
     private void createBalls(){
         balls = new ArrayList<>();
+        //addBall();
     }
 
     private void updateBalls(double deltaTime){
+        List<Ball> removeBalls = new ArrayList<>();
+
+        checkCollisions();
+
         for(Ball b : balls){
             b.update(deltaTime);
+
+            if(b.getX() < 0){ //Add balls out of bounds to remove-list
+                rackets[1].addScore();
+                removeBalls.add(b);
+            }else if(b.getX() > WORLD_WIDTH){
+                rackets[0].addScore();
+                removeBalls.add(b);
+            }
+        }
+
+        for(Ball b : removeBalls){ //Remove balls that's outside world
+            balls.remove(b);
+            addBall();
         }
     }
 
     private void checkCollisions(){
-        List<Ball> removeBalls = new ArrayList<>();
-
         for(Racket r : rackets){
             for(Ball b : balls){
                 if((b.getX() < r.getX() + r.getWidth()/2 &&
@@ -83,14 +111,7 @@ public class World{
                         b.getY() > r.getY() - r.getLength()/2)){
                     b.bounce(r.getNormal());
                 }
-                if(b.getX() < 0 || b.getX() > WORLD_WIDTH){
-                    removeBalls.add(b);
-                }
             }
-        }
-
-        for(Ball b : removeBalls){
-            balls.remove(b);
         }
     }
 

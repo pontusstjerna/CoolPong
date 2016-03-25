@@ -12,6 +12,7 @@ public class StandardRacket implements Racket {
     private double speed;
     private int length;
     private int width = 10;
+    private int score = 0;
 
     public StandardRacket(int x, int y, int speed, int length){
         this.x = x;
@@ -42,6 +43,17 @@ public class StandardRacket implements Racket {
 
     @Override
     public int getWidth(){ return width; }
+
+    @Override
+    public int getScore(){
+        return score;
+    }
+
+    @Override
+    public void addScore(){
+        score++;
+        System.out.println(toString() + " scored! Current score: " + score);
+    }
 
     @Override
     public Vector2D getNormal(){

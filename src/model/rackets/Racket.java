@@ -11,12 +11,14 @@ public interface Racket {
     int getRotation();
     int getLength();
     int getWidth();
+    int getScore();
     Vector2D getNormal();
 
     void moveUp();
     void moveDown();
     void rotateRight();
     void rotateLeft();
+    void addScore();
 
     String toString();
 }

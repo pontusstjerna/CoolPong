@@ -40,6 +40,9 @@ public class PlayerController implements KeyListener {
             case KeyEvent.VK_SPACE:
                 world.addBall();
                 break;
+            case KeyEvent.VK_B:
+                world.addBalls();
+                break;
         }
     }
 

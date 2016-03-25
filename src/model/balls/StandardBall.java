@@ -43,7 +43,7 @@ public class StandardBall implements Ball {
     public void bounce(Vector2D normal){
         direction = Vector2D.add(direction, (normal.normalize().multiply(speed*2))).normalize().multiply(speed);
         nBounces++;
-        System.out.println("Supposed speed: " + speed + " actual speed: " + direction.length() + ", nBounces: " + nBounces);
+        //System.out.println("Supposed speed: " + speed + " actual speed: " + direction.length() + ", nBounces: " + nBounces);
     }
 
     @Override

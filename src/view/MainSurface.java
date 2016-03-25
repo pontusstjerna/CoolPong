@@ -16,7 +16,7 @@ public class MainSurface extends JPanel {
 
     private Racket[] rackets;
     private List<Ball> balls;
-    private boolean showVectors = false;
+    private boolean showVectors = true;
 
     public MainSurface(Racket[] rackets, List<Ball> balls){
         setFocusable(true);
@@ -94,8 +94,8 @@ public class MainSurface extends JPanel {
 
             g.setColor(new Color(100,i,255));
 
-            int x = (int)(b.getX()*scale()) + scaleX();
-            int y = (int)(b.getY()*scale()) + scaleY();
+            int x = (int)((b.getX() - b.getRadius())*scale()) + scaleX();
+            int y = (int)((b.getY() - b.getRadius())*scale()) + scaleY();
 
             g.fillRoundRect(x, y,
                     (int)(scale()*b.getRadius()*2), (int)(scale()*b.getRadius()*2),

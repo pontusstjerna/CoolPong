@@ -46,21 +46,21 @@ public class PlayerController implements KeyListener {
         }
     }
 
-    public void update(){
+    public void update(double deltaTime){
 
         for(int i : movements) {
             switch (i) {
                 case KeyEvent.VK_RIGHT:
-                    player.rotateRight();
+                    player.rotateRight(deltaTime);
                     break;
                 case KeyEvent.VK_LEFT:
-                    player.rotateLeft();
+                    player.rotateLeft(deltaTime);
                     break;
                 case KeyEvent.VK_UP:
-                    player.moveUp();
+                    player.moveUp(deltaTime);
                     break;
                 case KeyEvent.VK_DOWN:
-                    player.moveDown();
+                    player.moveDown(deltaTime);
                     break;
             }
         }

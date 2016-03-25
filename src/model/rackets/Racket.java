@@ -14,10 +14,10 @@ public interface Racket {
     int getScore();
     Vector2D getNormal();
 
-    void moveUp();
-    void moveDown();
-    void rotateRight();
-    void rotateLeft();
+    void moveUp(double deltaTime);
+    void moveDown(double deltaTime);
+    void rotateRight(double deltaTime);
+    void rotateLeft(double deltaTime);
     void addScore();
 
     String toString();

@@ -24,6 +24,11 @@ public class Vector2D
         y = point.getY();
     }
 
+    public Vector2D(Vector2D vector){
+        x = vector.getX();
+        y = vector.getY();
+    }
+
     public Vector2D(Vector<Double> vector){
         if(vector.size() >= 2){
             x = vector.get(0);
@@ -117,8 +122,10 @@ public class Vector2D
         /*
         u = v/|v|
          */
-        x /= length();
-        y /= length();
+        double length = length();
+
+        x /= length;
+        y /= length;
 
         return this;
     }

@@ -8,7 +8,7 @@ import util.Vector2D;
  */
 public class StandardRacket implements Racket {
     private double x,y;
-    private int rotation;
+    private double rotation;
     private double speed;
     private int length;
     private int width = 10;
@@ -17,7 +17,7 @@ public class StandardRacket implements Racket {
     public StandardRacket(int x, int y, int speed, int length){
         this.x = x;
         this.y = y;
-        this.speed = speed;
+        this.speed = speed*World.WORLD_SPEED;
         this.length = length;
     }
 
@@ -33,7 +33,7 @@ public class StandardRacket implements Racket {
 
     @Override
     public int getRotation() {
-        return rotation;
+        return (int)rotation;
     }
 
     @Override
@@ -61,26 +61,26 @@ public class StandardRacket implements Racket {
     }
 
     @Override
-    public void moveUp() {
+    public void moveUp(double deltaTime) {
         if(y - length/2 > 0){
-            y -= speed;
+            y -= speed*deltaTime;
         }
     }
 
     @Override
-    public void moveDown() {
+    public void moveDown(double deltaTime) {
         if(y + length/2 < World.WORLD_HEIGHT){
-            y += speed;
+            y += speed*deltaTime;
         }
     }
 
     @Override
-    public void rotateRight() {
-        rotation = (rotation + (int)speed) % 360;
+    public void rotateRight(double deltaTime) {
+        rotation = (rotation + speed*deltaTime) % 360;
     }
 
     @Override
-    public void rotateLeft() {
-        rotation = (rotation - (int)speed) % 360;
+    public void rotateLeft(double deltaTime) {
+        rotation = (rotation - speed*deltaTime) % 360;
     }
 }

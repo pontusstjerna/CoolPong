@@ -4,6 +4,7 @@ import model.balls.Ball;
 import model.balls.StandardBall;
 import model.rackets.Racket;
 import model.rackets.StandardRacket;
+import util.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,8 @@ public class World{
     public static final int WORLD_WIDTH = 500;
     public static final int WORLD_HEIGHT = 300;
 
+    public static final double WORLD_SPEED = 1;
+
     private Racket[] rackets;
     private List<Ball> balls;
 
@@ -27,8 +30,8 @@ public class World{
     }
 
     public void update(double deltaTime) {
-        controlRacket(1);
-        //controlRacket(0);
+        controlRacket(1, deltaTime);
+        //controlRacket(0, deltaTime);
 
         updateBalls(deltaTime);
     }
@@ -52,7 +55,6 @@ public class World{
             }
         }
     }
-
     public Racket[] getRackets(){
         return rackets;
     }
@@ -69,8 +71,8 @@ public class World{
 
     private void createRackets(){
         rackets = new Racket[] {
-                new StandardRacket(50, WORLD_HEIGHT/2, 1, 50),
-                new StandardRacket(450, WORLD_HEIGHT/2, 1, 50)
+                new StandardRacket(50, WORLD_HEIGHT/2, 100, 50),
+                new StandardRacket(450, WORLD_HEIGHT/2, 100, 50)
         };
     }
 
@@ -105,25 +107,28 @@ public class World{
     private void checkCollisions(){
         for(Racket r : rackets){
             for(Ball b : balls){
-                if((b.getX() < r.getX() + r.getWidth()/2 &&
-                        b.getX() > r.getX() - r.getWidth()/2) &&
-                        (b.getY() < r.getY() + r.getLength()/2 &&
-                        b.getY() > r.getY() - r.getLength()/2)){
-                    b.bounce(r.getNormal());
+                if((b.getX() - b.getRadius() < r.getX() + r.getWidth()/2 &&
+                        b.getX() + b.getRadius() > r.getX() - r.getWidth()/2) &&
+                        (b.getY() - b.getRadius() < r.getY() + r.getLength()/2 &&
+                        b.getY() + b.getRadius() > r.getY() - r.getLength()/2)){
+                    b.bounce(new Vector2D(r.getNormal()));
                 }
             }
         }
     }
 
-    private void controlRacket(int i){
+    private void controlRacket(int i, double deltaTime){
         if(rackets[1].getRotation() < 180){
-            rackets[1].rotateRight();
+            rackets[1].rotateRight(deltaTime);
+        }else if(rackets[1].getRotation() > 180){
+            rackets[1].rotateLeft(deltaTime);
         }
-        if(balls.size() == 1){
+
+        if(balls.size() > 0){
             if(balls.get(0).getY() > rackets[i].getY()){
-                rackets[i].moveDown();
+                rackets[i].moveDown(deltaTime);
             }else{
-                rackets[i].moveUp();
+                rackets[i].moveUp(deltaTime);
             }
         }
     }

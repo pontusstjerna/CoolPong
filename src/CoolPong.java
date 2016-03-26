@@ -7,6 +7,6 @@ import javax.swing.*;
  */
 public class CoolPong {
     public static void main(String args[]){
-        SwingUtilities.invokeLater(() -> new MainController().startGame());
+        SwingUtilities.invokeLater(() -> new MainController().init());
     }
 }

@@ -5,6 +5,7 @@ import model.rackets.Racket;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
@@ -19,15 +20,16 @@ public class MainWindow extends JFrame implements ComponentListener {
 
     private final String title;
     private MainSurface surface;
+    private MenuSurface menu;
 
     public MainWindow(String title){
         this.title = title;
     }
 
-    public void init(Racket[] rackets, List<Ball> balls){
+    public void init(ActionListener menuListener){
         initWindow();
-        surface = new MainSurface(rackets, balls);
-        add(surface);
+        menu = new MenuSurface(menuListener);
+        add(menu);
         System.out.println("View initialized with width " + WINDOW_WIDTH + " and height " + WINDOW_HEIGHT + ". ");
     }
 
@@ -36,13 +38,19 @@ public class MainWindow extends JFrame implements ComponentListener {
         surface.repaint();
     }
 
-    public void registerKeyListener(KeyListener listener){
+    private void registerKeyListener(KeyListener listener){
         surface.addKeyListener(listener);
         surface.addComponentListener(this);
     }
 
-    public MainSurface getSurface(){
-        return surface;
+    public void startGame(Racket[] rackets, List<Ball> balls, KeyListener listener){
+        setResizable(true);
+        remove(menu);
+
+        surface = new MainSurface(rackets, balls);
+        add(surface);
+
+        registerKeyListener(listener);
     }
 
     private void initWindow(){
@@ -50,6 +58,7 @@ public class MainWindow extends JFrame implements ComponentListener {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
     }
 

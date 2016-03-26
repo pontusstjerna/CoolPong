@@ -12,14 +12,16 @@ public class StandardBall implements Ball {
     private double x,y;
     private Vector2D direction;
     private Random rand;
-    private double speed = 120*World.WORLD_SPEED;
+    private double speed = 120;
     private double radius = 5;
 
     private static int nBounces = 0;
 
-    public StandardBall(double x, double y){
+    public StandardBall(double x, double y, double WORLD_SPEED){
         this.x = x;
         this.y = y;
+
+        speed *= WORLD_SPEED;
 
         rand = new Random();
         direction = new Vector2D(rand.nextInt(60) - 30, rand.nextInt(60) - 30).normalize().multiply(speed);

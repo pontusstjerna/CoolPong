@@ -14,10 +14,10 @@ public class StandardRacket implements Racket {
     private int width = 10;
     private int score = 0;
 
-    public StandardRacket(int x, int y, int speed, int length){
+    public StandardRacket(int x, int y, int speed, int length, double WORLD_SPEED){
         this.x = x;
         this.y = y;
-        this.speed = speed*World.WORLD_SPEED;
+        this.speed = speed*WORLD_SPEED;
         this.length = length;
     }
 

@@ -15,6 +15,7 @@ public class MainController implements ActionListener {
     private Timer timer;
     private World world;
     private PlayerController playerController;
+    private MenuController menu;
 
     private double tempTime;
     private double deltaTime;
@@ -25,24 +26,26 @@ public class MainController implements ActionListener {
 
     }
 
-    public void startGame(){
+    public void init(){
         world = initWorld();
-        playerController = initPlayerControls(world);
+        menu = new MenuController();
         initView();
-        initTimer();
-        timer.start();
-        System.out.println("Game started!");
-        System.out.println("------------------------------");
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        playerController.update(getDeltaTime());
-        world.update(getDeltaTime());
-        frame.repaint();
-        //System.out.println("Fps: " + (1/getDeltaTime()));
-        setDeltaTime();
+        if(menu == null){
+            playerController.update(getDeltaTime());
+            world.update(getDeltaTime());
+            frame.repaint();
+            //System.out.println("Fps: " + (1/getDeltaTime()));
+            setDeltaTime();
+        }else{
+            menu.actionPerformed(e);
+            if(menu.done()){
+                startGame();
+            }
+        }
     }
 
     public double getDeltaTime(){
@@ -55,8 +58,17 @@ public class MainController implements ActionListener {
 
     private void initView(){
         frame = new MainWindow("Cool Pong");
-        frame.init(world.getRackets(), world.getBalls());
-        frame.registerKeyListener(playerController);
+        frame.init(this);
+    }
+
+    private void startGame(){
+        menu = null;
+        playerController = initPlayerControls(world);
+        frame.startGame(world.getRackets(), world.getBalls(), playerController);
+        initTimer();
+        timer.start();
+        System.out.println("Game started!");
+        System.out.println("------------------------------");
     }
 
     private void initTimer(){
@@ -64,7 +76,7 @@ public class MainController implements ActionListener {
     }
 
     private World initWorld(){
-        return new World();
+        return new World(1);
     }
 
     private void setDeltaTime(){

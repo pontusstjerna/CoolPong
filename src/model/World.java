@@ -17,15 +17,16 @@ public class World{
     public static final int WORLD_WIDTH = 500;
     public static final int WORLD_HEIGHT = 300;
 
-    public static final double WORLD_SPEED = 1;
+    private final double WORLD_SPEED;
 
     private Racket[] rackets;
     private List<Ball> balls;
 
     private Random rand;
 
-    public World(){
+    public World(int speed){
         rand = new Random();
+        this.WORLD_SPEED = speed;
         createWorld();
     }
 
@@ -39,7 +40,7 @@ public class World{
     public void addBall(){
         int x = WORLD_WIDTH/2;
         int y = WORLD_HEIGHT/2;
-        balls.add(new StandardBall(x, y));
+        balls.add(new StandardBall(x, y, WORLD_SPEED));
         System.out.println("Added ball at (" + x + "," + y + "). " + balls.size() + " ball(s).");
     }
 
@@ -48,7 +49,7 @@ public class World{
         for(int i = 0; i < 20000; i++){
             int x = rand.nextInt(WORLD_WIDTH);
             int y = rand.nextInt(WORLD_HEIGHT);
-            balls.add(new StandardBall(x, y));
+            balls.add(new StandardBall(x, y, WORLD_SPEED));
 
             if(i % 100000 == 0){
                 System.out.println(i/100000);
@@ -71,8 +72,8 @@ public class World{
 
     private void createRackets(){
         rackets = new Racket[] {
-                new StandardRacket(50, WORLD_HEIGHT/2, 100, 50),
-                new StandardRacket(450, WORLD_HEIGHT/2, 100, 50)
+                new StandardRacket(50, WORLD_HEIGHT/2, 100, 50, WORLD_SPEED),
+                new StandardRacket(450, WORLD_HEIGHT/2, 100, 50, WORLD_SPEED)
         };
     }
 

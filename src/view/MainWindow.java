@@ -41,13 +41,15 @@ public class MainWindow extends JFrame implements ComponentListener {
     private void registerKeyListener(KeyListener listener){
         surface.addKeyListener(listener);
         surface.addComponentListener(this);
+        surface.setFocusable(true);
+        surface.requestFocusInWindow();
     }
 
-    public void startGame(Racket[] rackets, List<Ball> balls, KeyListener listener){
+    public void startGame(Racket[] rackets, List<Ball> balls, boolean showVectors, KeyListener listener){
         setResizable(true);
         remove(menu);
 
-        surface = new MainSurface(rackets, balls);
+        surface = new MainSurface(rackets, balls, showVectors);
         add(surface);
 
         registerKeyListener(listener);

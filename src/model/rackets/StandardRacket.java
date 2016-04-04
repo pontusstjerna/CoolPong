@@ -19,6 +19,8 @@ public class StandardRacket implements Racket {
         this.y = y;
         this.speed = speed*WORLD_SPEED;
         this.length = length;
+
+        System.out.println("Spawned " + toString());
     }
 
     @Override
@@ -82,5 +84,14 @@ public class StandardRacket implements Racket {
     @Override
     public void rotateLeft(double deltaTime) {
         rotation = (rotation - speed*deltaTime) % 360;
+    }
+
+    @Override
+    public String toString(){
+        if(x < World.WORLD_WIDTH/2){
+            return "Left racket with " + score + " points.";
+        }else{
+            return "Right racket with " + score + " points.";
+        }
     }
 }

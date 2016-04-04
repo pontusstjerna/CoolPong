@@ -27,19 +27,19 @@ public class MainController implements ActionListener {
     }
 
     public void init(){
-        world = initWorld();
         menu = new MenuController();
         initView();
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
+        setDeltaTime();
+
         if(menu == null){
             playerController.update(getDeltaTime());
             world.update(getDeltaTime());
             frame.repaint();
             //System.out.println("Fps: " + (1/getDeltaTime()));
-            setDeltaTime();
         }else{
             menu.actionPerformed(e);
             if(menu.done()){
@@ -62,9 +62,11 @@ public class MainController implements ActionListener {
     }
 
     private void startGame(){
-        menu = null;
+        world = initWorld();
         playerController = initPlayerControls(world);
-        frame.startGame(world.getRackets(), world.getBalls(), playerController);
+        frame.startGame(world.getRackets(), world.getBalls(), menu.getShowVectors(), playerController);
+
+        menu = null;
         initTimer();
         timer.start();
         System.out.println("Game started!");

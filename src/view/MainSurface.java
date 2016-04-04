@@ -18,12 +18,13 @@ public class MainSurface extends JPanel {
     private List<Ball> balls;
     private boolean showVectors = true;
 
-    public MainSurface(Racket[] rackets, List<Ball> balls){
+    public MainSurface(Racket[] rackets, List<Ball> balls, boolean showVectors){
         setFocusable(true);
         System.out.println("Surface initialized with scale " + scale() + ". ");
 
         this.rackets = rackets;
         this.balls = balls;
+        this.showVectors = showVectors;
     }
 
     @Override
@@ -33,9 +34,6 @@ public class MainSurface extends JPanel {
 
         paintWorld(g2d);
         paintScore(g2d);
-        if(balls.size() == 0){
-            paintStartPrompt(g2d);
-        }
         paintBalls(g2d);
         paintRackets(g2d);
     }
@@ -106,17 +104,12 @@ public class MainSurface extends JPanel {
         }
     }
 
-    private void paintScore(Graphics2D g){
-        g.setFont(new Font("ScoreFont", Font.BOLD, (int)(20*scale())));
+    private void paintScore(Graphics2D g) {
+        g.setFont(new Font("ScoreFont", Font.BOLD, (int) (20 * scale())));
         g.setColor(Color.BLACK);
 
         g.drawString(rackets[0].getScore() + " - " + rackets[1].getScore(),
-                MainWindow.WINDOW_WIDTH/2 - (int)(scale()*10), (int)(scaleY() + scale()*20));
-    }
-
-    private void paintStartPrompt(Graphics2D g){
-        g.drawString("Press SPACE to start!",
-                MainWindow.WINDOW_WIDTH/2 - (int)(scale()*100), MainWindow.WINDOW_HEIGHT/2);
+                MainWindow.WINDOW_WIDTH / 2 - (int) (scale() * 10), (int) (scaleY() + scale() * 20));
     }
 
     private void paintVector(Vector2D vector, int startX, int startY, Graphics2D g){

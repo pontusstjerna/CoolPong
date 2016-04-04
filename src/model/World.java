@@ -79,7 +79,7 @@ public class World{
 
     private void createBalls(){
         balls = new ArrayList<>();
-        //addBall();
+        addBall();
     }
 
     private void updateBalls(double deltaTime){
